@@ -6,8 +6,8 @@ import argparse
 # =========================
 # CONFIG
 # =========================
-API_KEY = "LdNfumjzvLpTj5A7DvFtePbmyUjjBbszr0ydxvRnXD8fK9NknJeSQRMtZZxxRxAR"
-API_SECRET = "oIJTMRn3ROYmN0mQF0IVmObTcW9gLoBjGicEA3Wa9thVYaLckctLnvWB1tW48brk"
+API_KEY = "Your_api_key"
+API_SECRET = "Your_security_key"
 
 BASE_URL = "https://testnet.binancefuture.com"
 
@@ -118,4 +118,5 @@ def main():
 # RUN
 # =========================
 if __name__ == "__main__":
+
     main()
