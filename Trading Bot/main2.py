@@ -1,7 +1,8 @@
 import logging
+import argparse
+import requests
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
-import argparse
 
 # =========================
 # CONFIG
@@ -61,6 +62,20 @@ def place_order(client, symbol, side, order_type, quantity, price=None):
         print("❌ Error:", e)
 
 # =========================
+# REQUESTS LAYER (NEW)
+# =========================
+def fetch_current_price(symbol):
+    try:
+        url = f"{BASE_URL}/fapi/v1/ticker/price?symbol={symbol}"
+        response = requests.get(url, timeout=10)
+        data = response.json()
+        return float(data["price"])
+    except Exception as e:
+        logging.error(f"Price Fetch Error: {e}")
+        print("❌ Failed to fetch price:", e)
+        return None
+
+# =========================
 # VALIDATION
 # =========================
 def validate_side(side):
@@ -95,6 +110,11 @@ def main():
     print("Qty    :", args.qty)
     print("Price  :", args.price)
 
+    # Fetch market price using requests
+    market_price = fetch_current_price(args.symbol)
+    if market_price:
+        print("Market Price :", market_price)
+
     client = get_client()
 
     order = place_order(
@@ -118,5 +138,4 @@ def main():
 # RUN
 # =========================
 if __name__ == "__main__":
-
     main()
